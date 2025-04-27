@@ -109,7 +109,7 @@ export function AuthForm() {
         <CardDescription className="text-center">Track your OFC poker progress</CardDescription>
       </CardHeader>
       <Tabs defaultValue="signin">
-        <TabsList className="grid w-full grid-cols-2">
+        <TabsList className="m-6 grid w- grid-cols-2">
           <TabsTrigger value="signin">Sign In</TabsTrigger>
           <TabsTrigger value="signup">Sign Up</TabsTrigger>
         </TabsList>
