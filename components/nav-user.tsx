@@ -2,10 +2,9 @@
 
 "use client"
 
-import { Moon, Sun, LogOut, User as UserIcon, Loader2 } from "lucide-react" // Import Sun, Moon, UserIcon, Loader2
-import { useTheme } from "next-themes" // Import useTheme
-
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Moon, Sun, LogOut, User as UserIcon, Loader2 } from "lucide-react"
+// No longer need useTheme here
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,10 +14,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button" // Import Button
-import type { User } from "@supabase/supabase-js" // Import User type
+import { Button } from "@/components/ui/button"
+import type { User } from "@supabase/supabase-js"
+import { SwitchTheme } from "./layout/switch-theme" // Import the new component
 
-// Function to get initials from email
+// Function to get initials from email (keep existing)
 function getInitials(email: string | undefined): string {
   if (!email) return "?"
   const parts = email.split("@")[0]
@@ -36,40 +36,34 @@ function getInitials(email: string | undefined): string {
 export function NavUser({
   user,
   onSignOut,
-  isLoading, // Add isLoading prop
+  isLoading,
 }: {
-  user: User | null // Accept nullable User
-  onSignOut: () => Promise<void> // Function prop for sign out
-  isLoading: boolean // Prop to indicate loading state
+  user: User | null
+  onSignOut: () => Promise<void>
+  isLoading: boolean
 }) {
-  const { setTheme, theme } = useTheme() // Get theme functions
+  // useTheme hook is now inside SwitchTheme component
 
-  // Decide on the trigger content based on loading state
   const triggerContent = isLoading ? (
-    <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /> // Loading spinner
+    <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
   ) : (
     <Avatar className="h-8 w-8">
-      {/* We don't have a real avatar URL from Supabase Auth by default */}
-      {/* <AvatarImage src={user?.user_metadata?.avatar_url} alt={user?.user_metadata?.name || user?.email} /> */}
       <AvatarFallback>{getInitials(user?.email)}</AvatarFallback>
     </Avatar>
   )
 
-  // Don't render dropdown if loading or no user (except the trigger might show loading)
   if (!user && !isLoading) {
-    return null // Or potentially a sign-in button if needed here
+    return null
   }
 
   return (
     <DropdownMenu>
-      {/* Use Button as trigger for better accessibility & consistent styling */}
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full p-0">
           {triggerContent}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
-        {/* Added forceMount to prevent layout shifts when opening */}
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">{user?.user_metadata?.name || user?.email?.split("@")[0]}</p>
@@ -78,20 +72,27 @@ export function NavUser({
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          {/* Theme Toggle Item */}
-          <DropdownMenuItem onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-            {theme === "light" ? <Moon className="mr-2 h-4 w-4" /> : <Sun className="mr-2 h-4 w-4" />}
-            <span>{theme === "light" ? "Dark Mode" : "Light Mode"}</span>
+          {/* Preferences Label */}
+          <DropdownMenuLabel className="text-muted-foreground">
+            Preferences
+          </DropdownMenuLabel>
+
+          {/* --- Theme Toggle Section --- */}
+          {/* Wrap SwitchTheme in a DropdownMenuItem */}
+          {/* Prevent default selection behavior to keep menu open */}
+          <DropdownMenuItem
+            onSelect={(e) => e.preventDefault()}
+            className="cursor-default focus:bg-transparent" // Make item non-interactive visually
+          >
+            {/* Render the SwitchTheme component */}
+            <SwitchTheme />
           </DropdownMenuItem>
-          {/* Can add Settings/Profile link here later if needed */}
-          {/* <DropdownMenuItem disabled>
-            <UserIcon className="mr-2 h-4 w-4" />
-            <span>Profile</span>
-          </DropdownMenuItem> */}
+          {/* --- End Theme Toggle Section --- */}
+
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         {/* Sign Out Item */}
-        <DropdownMenuItem onClick={onSignOut}>
+        <DropdownMenuItem onClick={onSignOut} className="cursor-pointer"> {/* Ensure sign out is clickable */}
           <LogOut className="mr-2 h-4 w-4" />
           <span>Log out</span>
         </DropdownMenuItem>
