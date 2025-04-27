@@ -18,7 +18,7 @@ export default async function StartPage() {
     .maybeSingle()
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-16">
       <div className="flex flex-col sm:flex-row justify-between gap-4 items-start">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Start</h1>
