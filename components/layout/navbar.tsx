@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { getSupabaseBrowserClient } from "@/lib/supabase/client"
 import { useToast } from "@/hooks/use-toast"
 import { NavUser } from "@/components/nav-user"
+import { LogoSymbol } from "@/components/logo-symbol"
 import { useEffect, useState } from "react"
 import type { User } from "@supabase/supabase-js" // Import User type
 
@@ -72,10 +73,15 @@ export function Navbar() {
       {/* Adjusted padding: p-1 for mobile, sm:py-2 for desktop */}
       <div className="container mx-auto flex h-full items-center justify-between">
         {/* 1. Logo (Desktop only) */}
-        <div className="hidden sm:flex">
-          <Link href="/" className="text-xl font-bold">
-            LiqTheNit
-          </Link>
+        <div className="flex items-center justify-left pl-2">
+          <div className="hidden sm:flex">
+            <LogoSymbol className="h-9 w-7.5 text-primary mr-1.5" />
+          </div>
+          <div className="hidden sm:flex">
+            <Link href="/" className="text-3xl font-bold">
+              NIT
+            </Link>
+          </div>
         </div>
 
         {/* 2. Desktop Navigation (Desktop only) */}
