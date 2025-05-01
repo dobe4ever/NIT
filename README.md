@@ -1,5 +1,5 @@
 (
-echo "# Codebase Dump v0.1.5"
+echo "# Codebase Dump v0.2.0"
 for file in \
 'app/(app)/analytics/page.tsx' \
 'app/(app)/history/page.tsx' \
@@ -16,6 +16,7 @@ components/history/bitcoin-price-display.tsx \
 components/history/games-table.tsx \
 components/history/week-stats.tsx \
 components/layout/navbar.tsx \
+components/layout/switch-theme.tsx \
 components/start/active-games-list.tsx \
 components/start/game-form.tsx \
 components/start/session-controller.tsx \
@@ -33,4 +34,4 @@ do
   cat "$file"
   echo '```'
 done
-) > codebase.md
+) > codebase-v020.md

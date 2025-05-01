@@ -1,13 +1,13 @@
 // components/history/week-stats.tsx
 "use client"
 
-import { useState, useEffect, useCallback } from "react" // Import useCallback
+import { useState, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
-import { RefreshCw } from "lucide-react" // Import RefreshCw
-import { Button } from "@/components/ui/button" // Import Button
+import { RefreshCw } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { formatMoney, formatUBTC, convertUBTCtoUSD } from "@/lib/utils/number-formatter"
-import { getStartOfWeek, getHoursDifference } from "@/lib/utils/date-formatter" // Ensure getHoursDifference is imported
+import { getStartOfWeek, getHoursDifference } from "@/lib/utils/date-formatter"
 import { useToast } from "@/hooks/use-toast"
 import { getSupabaseBrowserClient } from "@/lib/supabase/client"
 import { getBitcoinPriceInUSD } from "@/lib/services/bitcoin-price"
@@ -152,7 +152,7 @@ export function WeekStats() {
           <Card>
             <CardHeader className="pb-2">
               <CardDescription>Total Hours</CardDescription>
-              <CardTitle>{stats.totalHours.toFixed(2)} hours</CardTitle>
+              <CardTitle>{stats.totalHours.toFixed(2)} hr</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">This week</p>

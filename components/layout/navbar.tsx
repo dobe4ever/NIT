@@ -17,6 +17,7 @@ const navItems = [
   { href: "/", label: "Start", icon: Play },
   { href: "/history", label: "History", icon: Clock },
   { href: "/analytics", label: "Analytics", icon: BarChart3 },
+  { href: "/dashboard", label: "Dashboard", icon: BarChart3 },
 ]
 
 export function Navbar() {
